@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.grioni.launcher.app.FavoritePageDynamicGridView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:grioni="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/favpage_gridview"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    grioni:deleteHeight="@dimen/delete_zone_height"
+    android:gravity="center"
+    android:horizontalSpacing="@dimen/app_horizontal_margin"
+    android:verticalSpacing="@dimen/app_vertical_margin"
+    android:numColumns="4"
+    android:stretchMode="columnWidth"
+    android:scrollbars="none"/>

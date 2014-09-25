@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <MultiSelectListPreference
+        android:key="@string/app_tray_items"
+        android:title="@string/preference_app_tray_items"
+        android:summary="@string/preference_app_tray_items_desc"
+        android:defaultValue="@array/empty_array"/>
+
+    <CheckBoxPreference
+        android:key="@string/app_tray_enabled"
+        android:title="@string/preference_app_tray_enabled"
+        android:summary="@string/preference_app_tray_enabled_desc"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="@string/card_notification_enabled"
+        android:title="@string/preference_card_notification_title"
+        android:summary="@string/preference_card_notification_desc"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="@string/profiles_enabled"
+        android:title="@string/preference_profiles_enabled_title"
+        android:summary="@string/preference_profiles_enabled_summary"
+        android:defaultValue="true" />
+</PreferenceScreen>

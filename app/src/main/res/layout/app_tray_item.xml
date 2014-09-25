@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/app_tray_item_icon"
+    android:layout_height="@dimen/app_tray_item_icon"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/app_tray_icon_selector">
+
+    <ImageView
+        android:id="@+id/app_tray_icon"
+        android:layout_width="@dimen/app_tray_item_icon"
+        android:layout_height="@dimen/app_tray_item_icon"
+        android:padding="@dimen/app_tray_item_padding"
+        android:contentDescription="@string/icon"/>
+
+</FrameLayout>

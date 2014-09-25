@@ -1,0 +1,33 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- App GridView item dimensions -->
+    <dimen name="app_label_size">13sp</dimen>
+    <dimen name="app_icon_size">48dip</dimen>
+
+    <dimen name="app_horizontal_margin">17dip</dimen>
+    <dimen name="app_vertical_margin">20dip</dimen>
+
+    <dimen name="app_tray_width">78dip</dimen>
+    <dimen name="app_tray_height">312dip</dimen>
+
+    <dimen name="app_tray_item_padding">9dip</dimen>
+    <dimen name="app_tray_item_icon">60dip</dimen>
+
+    <dimen name="folder_label_size">14sp</dimen>
+    <dimen name="folder_label_padding">8dp</dimen>
+    <dimen name="folder_horizontal_spacing">9dp</dimen>
+    <dimen name="folder_vertical_spacing">10dp</dimen>
+
+    <dimen name="delete_zone_height">60dp</dimen>
+
+    <dimen name="card_notification_title_size">15sp</dimen>
+    <dimen name="card_notification_header_padding">7dp</dimen>
+    <dimen name="card_notification_content_size">13sp</dimen>
+    <dimen name="card_notification_content_padding">7dp</dimen>
+
+    <dimen name="card_manager_padding_horizontal">6dp</dimen>
+
+</resources>

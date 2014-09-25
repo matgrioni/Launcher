@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_notification_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/fragment_card_notif_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/card_notification_title_size"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="@dimen/card_notification_header_padding"
+        android:paddingTop="@dimen/card_notification_header_padding"/>
+
+    <ImageView
+        android:id="@+id/fragment_card_notif_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:paddingRight="@dimen/card_notification_header_padding"
+        android:paddingTop="@dimen/card_notification_header_padding"
+        android:contentDescription="@string/card_notification_icon_desc"/>
+
+    <TextView
+        android:id="@+id/fragment_card_notif_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="@dimen/card_notification_content_padding"
+        android:textSize="@dimen/card_notification_content_size"/>
+
+    <TextView
+        android:id="@+id/fragment_card_notif_content_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/card_notification_content_size"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/fragment_card_notif_content"
+        android:paddingRight="@dimen/card_notification_content_padding"
+        android:paddingTop="@dimen/card_notification_content_padding"/>
+
+    <TextView
+        android:id="@+id/fragment_card_notif_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:paddingRight="@dimen/card_notification_content_padding"
+        android:paddingBottom="@dimen/card_notification_content_padding"/>
+
+</RelativeLayout>
