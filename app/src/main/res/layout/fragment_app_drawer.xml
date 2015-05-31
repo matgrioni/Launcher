@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.view.ViewPager
+<com.grioni.launcher.app.EditOverlay
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/apps"
+    android:id="@+id/edit_overlay"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center" />
+    android:layout_height="match_parent">
+
+    <com.grioni.launcher.app.AppViewPager
+        android:id="@+id/apps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center" />
+
+</com.grioni.launcher.app.EditOverlay>

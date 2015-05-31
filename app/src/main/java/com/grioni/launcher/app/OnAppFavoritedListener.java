@@ -6,7 +6,7 @@ package com.grioni.launcher.app;
 public interface OnAppFavoritedListener {
     /**
      *
-     * @param transferInfo
+     * @param position - The app index of the favorited app on the page is it on.
      */
-    public void onAppFavorited(AppTransferInfo transferInfo);
+    public void onAppFavorited(int position);
 }

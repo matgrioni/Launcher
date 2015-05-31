@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
 import java.util.WeakHashMap;
 
 /**
@@ -23,14 +24,12 @@ public class AppTabAdapter extends FragmentPagerAdapter {
     private int favGridId;
     private int gridItemResourceId;
 
-    private WeakHashMap<Integer, Fragment> registeredFragments;
-
     private OnAppFavoritedListener userAppFavorited;
     private OnAppFavoritedListener localAppFavorited = new OnAppFavoritedListener() {
         @Override
-        public void onAppFavorited(AppTransferInfo favoriteInfo) {
+        public void onAppFavorited(int position) {
             if(userAppFavorited != null)
-                userAppFavorited.onAppFavorited(favoriteInfo);
+                userAppFavorited.onAppFavorited(position);
         }
     };
 
@@ -49,8 +48,6 @@ public class AppTabAdapter extends FragmentPagerAdapter {
         this.appGridId = appGridId;
         this.favGridId = favGridId;
         this.gridItemResourceId = gridItemResourceId;
-
-        registeredFragments = new WeakHashMap<Integer, Fragment>();
     }
 
     /**
@@ -64,9 +61,11 @@ public class AppTabAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        // If this fragment has not been created yet or has been created and consumed by the garbage
+        // collector then create it again.
         DrawerPageFragment appPage;
 
-        if(position < manager.getFavoritesPageCount())
+        if (position < manager.getFavoritesPageCount())
             appPage = FavoritePageFragment.newInstance(position, favGridId, gridItemResourceId);
         else {
             appPage = AppPageFragment.newInstance(position - manager.getFavoritesPageCount(),
@@ -74,24 +73,7 @@ public class AppTabAdapter extends FragmentPagerAdapter {
             ((AppPageFragment) appPage).setAppFavoritedListener(localAppFavorited);
         }
 
-        registeredFragments.put(position, appPage);
-
         return appPage;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
-        registeredFragments.remove(position);
-    }
-
-    /**
-     *
-     * @param position
-     * @return
-     */
-    public Fragment getFragment(int position) {
-        return registeredFragments.get(position);
     }
 
     /**

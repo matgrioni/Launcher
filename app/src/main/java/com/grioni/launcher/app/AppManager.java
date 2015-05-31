@@ -37,8 +37,6 @@ public class AppManager extends DataSetObservable {
     private FragmentActivity context;
     private int pageLimit;
 
-
-
     /**
      * The created instance of AppManager that is shared. This way the apps are only loaded once.
      */
@@ -130,6 +128,23 @@ public class AppManager extends DataSetObservable {
      *
      * @param activity
      */
+    public static void instantiate(FragmentActivity activity) {
+        instance = new AppManager(activity);
+    }
+
+    /**
+     *
+     * @param activity
+     * @param pageLimit
+     */
+    public static void instantiate(FragmentActivity activity, int pageLimit) {
+        instance = new AppManager(activity, pageLimit);
+    }
+
+    /**
+     *
+     * @param activity
+     */
     public AppManager(FragmentActivity activity) {
         this(activity, -1);
     }
@@ -146,8 +161,6 @@ public class AppManager extends DataSetObservable {
         if (!created)
             activity.getSupportLoaderManager().initLoader(0, null, appLoader);
         created = true;
-
-        instance = this;
     }
 
     /**
@@ -155,14 +168,6 @@ public class AppManager extends DataSetObservable {
      */
     public void forceReload() {
         context.getSupportLoaderManager().restartLoader(0, null, appLoader);
-    }
-
-    /**
-     *
-     * @param listener
-     */
-    public void addListener(DataSetObserver listener) {
-        registerObserver(listener);
     }
 
     /**

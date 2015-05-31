@@ -31,7 +31,7 @@ import java.util.List;
  *
  * Created by Matias Grioni on 5/15/14.
  */
-public class DynamicGridView extends GridView {
+public class DynamicGridView extends GridView implements EditSurface {
 
     public static final int INVALID_ID = AbstractDynamicAdapter.INVALID_ID;
 
@@ -239,8 +239,7 @@ public class DynamicGridView extends GridView {
 
             // If there is an up MotionEvent then call reset for the DynamicGridView.
             case MotionEvent.ACTION_UP:
-                final View mobileView = getViewForId(mobileItemId);
-                reset(mobileView);
+                reset();
 
                 if(onItemDroppedListener != null) {
                     int position = getPositionForId(mobileItemId);
@@ -379,9 +378,8 @@ public class DynamicGridView extends GridView {
 
     /**
      * Resets the DynamicGridView so that all moving of views or editing is finished.
-     * @param mobileView - The view that was being moved which should be set to visible.
      */
-    private void reset(View mobileView) {
+    public void reset() {
         nonMobileIds.clear();
         activePointerId = INVALID_ID;
         mobileItemId = INVALID_ID;
@@ -393,31 +391,18 @@ public class DynamicGridView extends GridView {
         offsetX = 0;
         offsetY = 0;
 
-        if (mobileView != null)
-            mobileView.setVisibility(View.VISIBLE);
+        if (getMovingItem() != null)
+            getMovingItem().setVisibility(View.VISIBLE);
 
         invalidate();
     }
 
     /**
      *
-     * @param transferInfo
+     * @return
      */
-    protected void startMovingData(AppTransferInfo transferInfo) {
-        if(editable) {
-            // AppTransferInfo.AppPosition location = transferInfo.appPosition;
-            int position = transferInfo.position;
-
-            offsetX = 0;
-            offsetY = 0;
-
-            mobileItemId = (int) getAdapter().getItemId(position);
-            getMobileView().setVisibility(View.INVISIBLE);
-            mobileItemDrawable = getHoverView(getMobileView());
-            updateNeighborIds(mobileItemId);
-
-            setGridState(DynamicGridState.EDITING);
-        }
+    public View getMovingItem() {
+        return getViewForId(mobileItemId);
     }
 
     /**
@@ -435,20 +420,7 @@ public class DynamicGridView extends GridView {
     }
 
     /**
-     * Get a view that is represented by a point, where x is the column, and y the row.
-     * @param point - The point or position of the view to get.
-     * @return - The view that is represented by the point passed in.
-     */
-    private View getViewForPoint(Point point) {
-        int position = point.y * getNumColumns() + point.x;
-        int visPosition = position - getFirstVisiblePosition();
-
-        return getChildAt(visPosition);
-
-    }
-
-    /**
-     * Gets a Bitmap of the View and creates a BitmapDrawable and assigns the Rect's of the mobile
+     * Gets a Bitmap of the View and creates a BitmapDrawable and assigns the rect of the mobile
      * item properly.
      * @param view - The View to get the BitmapDrawable of.
      * @return - The BitmapDrawable of the View.
@@ -603,55 +575,39 @@ public class DynamicGridView extends GridView {
      *
      * @return
      */
-    protected Rect getMobileItemCurrent() {
+    public Rect getMobileItemPosition() {
         return mobileItemCurrent;
-    }
-
-    protected int getDownX() {
-        return downX;
-    }
-
-    protected int getDownY() {
-        return downY;
     }
 
     /**
      *
      * @return
      */
-    protected int getOffsetX() {
-        return offsetX;
-    }
-
-    protected int getOffsetY() {
-        return offsetY;
-    }
-
-    protected BitmapDrawable getMobileItemDrawable() {
+    public BitmapDrawable getMobileDrawable() {
         return mobileItemDrawable;
     }
 
     /**
      *
-     * @return
+     * @param editable
      */
-    public DynamicGridState getGridState() {
-        return gridState;
-    }
-
-    public boolean getEditable() {
-        return editable;
-    }
-
     public void setEditable(boolean editable) {
         this.editable = editable;
     }
 
     /**
      *
+     * @return
+     */
+    public DynamicGridState getState() {
+        return gridState;
+    }
+
+    /**
+     *
      * @param gridState
      */
-    public void setGridState(DynamicGridState gridState) {
+    public void setState(DynamicGridState gridState) {
         this.gridState = gridState;
     }
 }

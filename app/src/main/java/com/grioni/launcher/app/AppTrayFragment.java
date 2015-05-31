@@ -42,7 +42,7 @@ public class AppTrayFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         manager = AppManager.getInstance();
-        manager.addListener(observer);
+        manager.registerObserver(observer);
 
         appTray = (AppTrayContainer) inflater.inflate(R.layout.fragment_app_tray, container, false);
         adapter = new AppTrayAdapter(getActivity(), manager.getAppTray(), R.layout.app_tray_item);

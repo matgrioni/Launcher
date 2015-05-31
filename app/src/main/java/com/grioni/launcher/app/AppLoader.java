@@ -99,7 +99,8 @@ public class AppLoader extends AsyncTaskLoader<List<AppModel>> {
                 onReleaseResources(appModels);
 
         // Rearrange these variables in this way to update the member variable list of apps, and to
-        // be able to release the resources associated with the old application list properly.
+        // be able to release the resources associated with the old application list properly. Also
+        // use new ArrayList to avoid any ConcurrentModificationExceptions.
         List<AppModel> oldAppModels = apps;
         apps = appModels;
 

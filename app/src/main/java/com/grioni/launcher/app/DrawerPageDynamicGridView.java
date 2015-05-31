@@ -93,8 +93,8 @@ public class DrawerPageDynamicGridView extends PageDynamicGridView {
 
         switch(action) {
             case MotionEvent.ACTION_UP:
-                if (getGridState() == DynamicGridState.FOLDER_CREATION || getGridState() == DynamicGridState.EDITING) {
-                    if (getMobileItemCurrent().centerY() > getBottom() - deleteHeight) {
+                if (getState() == DynamicGridState.FOLDER_CREATION || getState() == DynamicGridState.EDITING) {
+                    if (getMobileItemPosition().centerY() > getBottom() - deleteHeight) {
                         if (onDeleteItem != null) {
                             // TODO: This is not the best way to solve the problem of visibility for
                             // a view that is just added after deletion but it works.
@@ -104,7 +104,7 @@ public class DrawerPageDynamicGridView extends PageDynamicGridView {
                     }
                 }
 
-                setGridState(DynamicGridState.STABLE);
+                setState(DynamicGridState.STABLE);
 
                 break;
         }
@@ -115,8 +115,8 @@ public class DrawerPageDynamicGridView extends PageDynamicGridView {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if(getGridState() == DynamicGridState.EDITING
-                || getGridState() == DynamicGridState.FOLDER_CREATION) {
+        if(getState() == DynamicGridState.EDITING
+                || getState() == DynamicGridState.FOLDER_CREATION) {
             Paint paint = new Paint();
             paint.setColor(getResources().getColor(R.color.delete_zone_background));
             canvas.drawRect(0, getBottom() - deleteHeight,

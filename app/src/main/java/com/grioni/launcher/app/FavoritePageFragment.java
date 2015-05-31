@@ -64,14 +64,19 @@ public class FavoritePageFragment extends DrawerPageFragment {
         appGrid = (FavoritePageDynamicGridView) inflater.inflate(gridResourceId, container, false);
         appGrid.setOnAppMovedListener(onFavoriteMoved);
         ((FavoritePageDynamicGridView) appGrid).setOnFolderCreatedListener(onFolderCreated);
-        ((FavoritePageDynamicGridView) appGrid).setOnDeleteItemListener(onDeleteItemListener);
+        appGrid.setOnDeleteItemListener(onDeleteItemListener);
 
         adapter = new FavoriteDynamicGridAdapter(getActivity(), manager.getFavoritePage(position), gridItemResourceId);
         appGrid.setAdapter(adapter);
 
-        manager.addListener(favoritesObserver);
+        manager.registerObserver(favoritesObserver);
 
         return appGrid;
+    }
+
+    public void onDestroyView() {
+        super.onDestroyView();
+        manager.unregisterObserver(favoritesObserver);
     }
 
     @Override

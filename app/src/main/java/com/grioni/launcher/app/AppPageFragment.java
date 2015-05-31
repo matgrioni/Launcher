@@ -28,11 +28,13 @@ public class AppPageFragment extends DrawerPageFragment {
     private OnAppFavoritedListener userOnAppFavorited;
     private OnAppFavoritedListener localOnAppFavorited = new OnAppFavoritedListener() {
         @Override
-        public void onAppFavorited(AppTransferInfo favoriteInfo) {
-            manager.addFavorite(manager.getApp(position, favoriteInfo.position));
+        public void onAppFavorited(int innerIndex) {
+            // Add the favorited app to the favorites list by getting the app from the app manager
+            // based on the page index and app index in the page.
+            manager.addFavorite(manager.getApp(position, innerIndex));
 
             if(userOnAppFavorited != null)
-                userOnAppFavorited.onAppFavorited(favoriteInfo);
+                userOnAppFavorited.onAppFavorited(innerIndex);
         }
     };
 

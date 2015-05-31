@@ -94,7 +94,7 @@ public class FavoritePageDynamicGridView extends DrawerPageDynamicGridView {
                 for(int i = 0; i < nonMobileIds.size(); i++) {
                     View neighborView = getViewForId(nonMobileIds.get(i));
 
-                    Rect mobileItemCurrent = getMobileItemCurrent();
+                    Rect mobileItemCurrent = getMobileItemPosition();
                     int midXRight = neighborView.getRight();
                     int midXLeft = neighborView.getLeft();
                     int midYTop = neighborView.getTop();
@@ -108,14 +108,14 @@ public class FavoritePageDynamicGridView extends DrawerPageDynamicGridView {
                     }
                 }
 
-                if(possibleRootId != INVALID_ID && getGridState() == DynamicGridState.EDITING) {
-                    setGridState(DynamicGridState.FOLDER_CREATION);
+                if(possibleRootId != INVALID_ID && getState() == DynamicGridState.EDITING) {
+                    setState(DynamicGridState.FOLDER_CREATION);
 
                     ImageView icon = (ImageView) getViewForId(possibleRootId).findViewById(R.id.app_icon);
                     priorIcon = icon.getDrawable();
                     icon.setImageDrawable(folderIcon);
-                } else if(possibleRootId == INVALID_ID && getGridState() == DynamicGridState.FOLDER_CREATION) {
-                    setGridState(DynamicGridState.EDITING);
+                } else if(possibleRootId == INVALID_ID && getState() == DynamicGridState.FOLDER_CREATION) {
+                    setState(DynamicGridState.EDITING);
 
                     ImageView icon = (ImageView) getViewForId(rootId).findViewById(R.id.app_icon);
                     icon.setImageDrawable(priorIcon);
@@ -124,7 +124,7 @@ public class FavoritePageDynamicGridView extends DrawerPageDynamicGridView {
                 break;
 
             case MotionEvent.ACTION_UP:
-                if(getGridState() == DynamicGridState.FOLDER_CREATION) {
+                if(getState() == DynamicGridState.FOLDER_CREATION) {
                     View folderRoot = getViewForId(rootId);
 
                     // TODO: Same thing as above where this is not possibly the best way to do this.

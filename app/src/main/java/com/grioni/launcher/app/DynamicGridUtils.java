@@ -1,6 +1,7 @@
 package com.grioni.launcher.app;
 
 import android.content.Context;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -13,9 +14,13 @@ import java.util.List;
 public class DynamicGridUtils {
 
     private static int height;
+    private boolean instantiated = false;
 
     public static void instantiate(Context context) {
         height = context.getResources().getDisplayMetrics().heightPixels;
+
+        if(context instanceof ActionBarActivity)
+            height -= 2 * ((ActionBarActivity) context).getActionBar().getHeight();
     }
 
     /**

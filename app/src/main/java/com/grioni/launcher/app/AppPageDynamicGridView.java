@@ -18,17 +18,7 @@ public class AppPageDynamicGridView extends DrawerPageDynamicGridView {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             if(onAppFavorited != null) {
-                AppModel favoritedApp = (AppModel) getAdapter().getItem(position);
-                AppModel copy = new AppModel(favoritedApp);
-
-                View mobileView = getMobileView();
-                int mx = (int) mobileView.getX();
-                int my = (int) mobileView.getY();
-                AppTransferInfo favoriteInfo = new AppTransferInfo(position,
-                        mx, my, getDownX() - mx, getDownY() - my);
-
-                onAppFavorited.onAppFavorited(favoriteInfo);
-
+                onAppFavorited.onAppFavorited(position);
                 return true;
             }
 

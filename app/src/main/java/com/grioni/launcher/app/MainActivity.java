@@ -23,32 +23,32 @@ public class MainActivity extends ActionBarActivity {
     public static String INTENT_ACTION_NOTIFICATION_POSTED = "com.grioni.notification_posted";
     public static String INTENT_ACTION_NOTIFICATION_REMOVED = "com.grioni.notification_removed";
 
-    public static final int REQUEST_BIND_APPWIDGET = 9;
-    public static final int REQUEST_PICK_APPWIDGET = 5;
-
-    private AppWidgetManager widgetManager;
-    private CardAppWidgetHost cardAppWidgetHost;
-    private final int CARD_APP_WIDGET_HOST_ID = 34;
-    private int nextWidgetId;
-
-    FragmentManager.OnBackStackChangedListener appDrawerStateChanged = new FragmentManager.OnBackStackChangedListener() {
+    /**
+     * When the back stack is changed, if the app drawer was previously opened, then the action bar
+     * tabs are still present. When the app drawer is closed the tabs for the app drawer are
+     * explicitly removed since otherwise they will still be there on the main launcher page.
+     */
+    FragmentManager.OnBackStackChangedListener appDrawerStateChanged =
+            new FragmentManager.OnBackStackChangedListener() {
         @Override
         public void onBackStackChanged() {
-            if(!appDrawerOpen) {
+            if(!appDrawer.isVisible()) {
                 getSupportActionBar().removeAllTabs();
                 getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
             }
-
-            appDrawerOpen = !appDrawerOpen;
         }
     };
 
+    /**
+     * The ImageView and the listener that opens the app drawer when this view is clicked.
+     */
     private ImageView appDrawerOpener;
     private View.OnClickListener onAppDrawerOpen = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            appDrawerOpen = true;
-
+            // Display the app drawer to the screen and add it to the back stack so users can exit
+            // it.
+            DynamicGridUtils.instantiate(MainActivity.this);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.app_drawer_container, appDrawer);
             transaction.addToBackStack(null);
@@ -60,8 +60,6 @@ public class MainActivity extends ActionBarActivity {
     private AppDrawerFragment appDrawer;
     private CardManagerFragment cardManager;
 
-    private boolean appDrawerOpen = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,27 +67,23 @@ public class MainActivity extends ActionBarActivity {
 
         getSupportFragmentManager().addOnBackStackChangedListener(appDrawerStateChanged);
 
+        AppManager.instantiate(this);
+
         appDrawer = AppDrawerFragment.newInstance();
         appDrawerOpener = (ImageView) findViewById(R.id.app_drawer_open);
         appDrawerOpener.setOnClickListener(onAppDrawerOpen);
 
-        DynamicGridUtils.instantiate(this);
-        new AppManager(this);
-        widgetManager = AppWidgetManager.getInstance(this);
-        cardAppWidgetHost = new CardAppWidgetHost(this, CARD_APP_WIDGET_HOST_ID);
-
-        nextWidgetId = 0;
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        // Load the preferences (ie. is it enabled and how many items to display)
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (preferences.getBoolean(getResources().getString(R.string.app_tray_enabled), false))
             transaction.add(R.id.app_tray_frame, AppTrayFragment.newInstance());
 
+        // Create the card manager fragment to handle all the different app cards seen on main UI
         cardManager = CardManagerFragment.newInstance(R.layout.fragment_card_manager,
                 R.layout.fragment_card_notification);
         transaction.add(R.id.card_manager_frame, cardManager);
-
         transaction.commit();
     }
 
@@ -113,24 +107,18 @@ public class MainActivity extends ActionBarActivity {
 
                 return true;
 
-            case R.id.add:
-                int appWidgetId =
-                        cardAppWidgetHost.allocateAppWidgetId();
-                Intent pickIntent =
-                        new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
-                pickIntent.putExtra
-                        (AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-
-                startActivityForResult(pickIntent, REQUEST_PICK_APPWIDGET);
-
+            // When there has been a fragment added over the MainActivity, navigate back when the
+            // back button in the action bar is pressed.
+            case android.R.id.home:
+                getSupportFragmentManager().popBackStack();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    /*@Override
+    /*protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
 
             switch (requestCode) {
@@ -147,5 +135,5 @@ public class MainActivity extends ActionBarActivity {
                     break;
             }
         }
-    }
+    }*/
 }
